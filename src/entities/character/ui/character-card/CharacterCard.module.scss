@@ -1,6 +1,12 @@
 .characterCard {
-  width: 200px;
+  background: rgb(60, 62, 68);
   display: flex;
+  margin: 8px;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.right {
 }
 .left {
   flex-shrink: 0;
