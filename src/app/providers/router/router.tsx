@@ -1,9 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { App } from '../../App'
+import { CharactersPage } from '@/pages/characters-page/CharactersPage'
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <CharactersPage />,
   },
 ])
