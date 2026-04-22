@@ -1,4 +1,5 @@
 import { useGetCharactersQuery } from '@/entities/character/api/characterApi'
+import { CharacterCard } from '@/entities/character/ui/character-card/CharacterCard'
 
 export const CharactersPage = () => {
   const { data, isLoading, error } = useGetCharactersQuery(1)
@@ -11,7 +12,7 @@ export const CharactersPage = () => {
       <h1>Characters</h1>
 
       {data?.results.map(char => (
-        <div key={char.id}>{char.name}</div>
+        <CharacterCard key={char.id} character={char} />
       ))}
     </div>
   )
