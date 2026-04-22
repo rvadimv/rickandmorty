@@ -1,3 +1,7 @@
 export const App = () => {
-  return null
+  return (
+    <main>
+      <h1>Rick and Morty App</h1>
+    </main>
+  )
 }
