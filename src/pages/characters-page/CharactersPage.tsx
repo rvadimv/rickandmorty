@@ -4,6 +4,10 @@ import { useSearchParams } from 'react-router-dom'
 
 import s from './CharactersPage.module.scss'
 import { getPaginationPages } from '@/shared/lib/getPaginationPages.ts'
+import { LoadingState } from '@/shared/ui/loading-state/LoadingState.tsx'
+import { ErrorState } from '@/shared/ui/error-state/ErrorState.tsx'
+import { EmptyState } from '@/shared/ui/empty-state/EmptyState.tsx'
+import { isNotFoundError, parseApiError } from '@/shared/lib/parseApiError.ts'
 
 export const CharactersPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -37,9 +41,19 @@ export const CharactersPage = () => {
     setSearchParams(params)
   }
 
-  if (isLoading) return <div>Loading...</div>
-  if (error) return <div>Failed to load characters</div>
-  if (!data?.results.length) return <div>No characters found</div>
+  if (isLoading) return <LoadingState message="Loading characters..." />
+
+  if (isNotFoundError(error)) {
+    return <EmptyState message="No characters found" />
+  }
+
+  if (error) {
+    return <ErrorState message={parseApiError(error, 'Failed to load characters')} />
+  }
+
+  if (!data?.results.length) {
+    return <EmptyState message="No characters found" />
+  }
 
   const pagesArray = getPaginationPages(data?.info.pages, page)
 
