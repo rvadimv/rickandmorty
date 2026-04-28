@@ -20,7 +20,9 @@ export const Search = (props: Props) => {
         type="text"
         placeholder={placeholder}
       />
-      <button onClick={onSearch}>Search</button>
+      <button onClick={onSearch} disabled={!value}>
+        Search
+      </button>
     </div>
   )
 }

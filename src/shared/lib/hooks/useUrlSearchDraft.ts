@@ -11,13 +11,14 @@ export const useUrlSearchDraft = (paramName: string) => {
     const params = new URLSearchParams(searchParams)
     const trimmed = value.trim()
 
+    params.set('page', '1')
+
     if (trimmed) {
       params.set(paramName, trimmed)
     } else {
       params.delete(paramName)
     }
 
-    params.set('page', '1')
     setSearchParams(params)
   }
 
