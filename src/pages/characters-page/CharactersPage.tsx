@@ -1,22 +1,28 @@
 import { useGetCharactersQuery } from '@/entities/character/api/characterApi'
 import { CharacterCard } from '@/entities/character/ui/character-card/CharacterCard'
 import { useSearchParams } from 'react-router-dom'
+import { getPaginationPages } from '@/shared/lib/getPaginationPages'
+import { LoadingState } from '@/shared/ui/loading-state/LoadingState'
+import { ErrorState } from '@/shared/ui/error-state/ErrorState'
+import { EmptyState } from '@/shared/ui/empty-state/EmptyState'
+import { isNotFoundError, parseApiError } from '@/shared/lib/parseApiError'
+import { Search } from '@/shared/ui/search/Search'
 
 import s from './CharactersPage.module.scss'
-import { getPaginationPages } from '@/shared/lib/getPaginationPages.ts'
-import { LoadingState } from '@/shared/ui/loading-state/LoadingState.tsx'
-import { ErrorState } from '@/shared/ui/error-state/ErrorState.tsx'
-import { EmptyState } from '@/shared/ui/empty-state/EmptyState.tsx'
-import { isNotFoundError, parseApiError } from '@/shared/lib/parseApiError.ts'
+import { useUrlSearchDraft } from '@/shared/lib/hooks/useUrlSearchDraft'
 
 export const CharactersPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const rawPage = searchParams.get('page')
+  const name = searchParams.get('name') ?? ''
+
+  const { value, onSearch, onValueChange, onKeyDown } = useUrlSearchDraft('name')
+
   const parsedPage = Number(rawPage)
   const page = Number.isInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1
 
-  const { data, isLoading, error } = useGetCharactersQuery(page)
+  const { data, isLoading, error } = useGetCharactersQuery({ page, name })
 
   const handlePagePrev = () => {
     if (page === 1) return
@@ -55,13 +61,22 @@ export const CharactersPage = () => {
     return <EmptyState message="No characters found" />
   }
 
-  const pagesArray = getPaginationPages(data?.info.pages, page)
+  const pagesArray = getPaginationPages(data.info.pages, page)
 
   return (
     <>
       <h1>Characters</h1>
+
+      <Search
+        placeholder="Search Characters"
+        value={value}
+        onSearch={onSearch}
+        onValueChange={onValueChange}
+        onKeyDown={onKeyDown}
+      />
+
       <div className={s.list}>
-        {data?.results.map(char => (
+        {data.results.map(char => (
           <CharacterCard key={char.id} character={char} />
         ))}
       </div>
@@ -76,7 +91,7 @@ export const CharactersPage = () => {
             </button>
           ))}
         </div>
-        <button onClick={handlePageNext} disabled={!data?.info.next}>
+        <button onClick={handlePageNext} disabled={!data.info.next}>
           Next
         </button>
       </div>
