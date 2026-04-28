@@ -3,18 +3,3 @@
   grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
   padding: 16px;
 }
-
-.active {
-  color: #00eaff;
-}
-.pagination {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  font-size: 18px;
-}
-.pages {
-  display: flex;
-  gap: 8px;
-}
