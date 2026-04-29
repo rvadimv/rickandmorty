@@ -3,12 +3,16 @@ import type { Character, CharactersResponse } from '@/entities/character/model/t
 
 export const characterApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getCharacters: builder.query<CharactersResponse, { page: number; name?: string }>({
-      query: ({ page, name }) => ({
+    getCharacters: builder.query<
+      CharactersResponse,
+      { page: number; name?: string; status?: string }
+    >({
+      query: ({ page, name, status }) => ({
         url: 'character',
         params: {
           page,
           ...(name?.trim() ? { name: name.trim() } : {}),
+          ...(status ? { status } : {}),
         },
       }),
     }),

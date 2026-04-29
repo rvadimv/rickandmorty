@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent, type KeyboardEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { updateParams } from '@/shared/lib/updateParams'
 
 export const useUrlSearchDraft = (paramName: string) => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -8,18 +9,10 @@ export const useUrlSearchDraft = (paramName: string) => {
   const [value, setValue] = useState(urlValue)
 
   const onSearch = () => {
-    const params = new URLSearchParams(searchParams)
-    const trimmed = value.trim()
-
-    params.set('page', '1')
-
-    if (trimmed) {
-      params.set(paramName, trimmed)
-    } else {
-      params.delete(paramName)
-    }
-
-    setSearchParams(params)
+    updateParams(searchParams, setSearchParams, {
+      page: '1',
+      [paramName]: value,
+    })
   }
 
   const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -8,21 +8,20 @@ import { isNotFoundError, apiError } from '@/shared/lib/apiError'
 import { Search } from '@/shared/ui/search/Search'
 import { useUrlSearchDraft } from '@/shared/lib/hooks/useUrlSearchDraft'
 import { Pagination } from '@/shared/ui/pagination/Pagination'
+import { CharacterFilters } from '@/features/character-filters/ui/CharacterFilters'
+import { updateParams } from '@/shared/lib/updateParams'
+import { getCharactersParams } from '@/pages/characters-page/lib/useCharactersParams'
 
 import s from './CharactersPage.module.scss'
 
 export const CharactersPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const name = searchParams.get('name') ?? ''
-
-  const rawPage = searchParams.get('page')
-  const parsedPage = Number(rawPage)
-  const page = Number.isInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1
+  const { page, name, status } = getCharactersParams(searchParams)
 
   const { value, onSearch, onValueChange, onKeyDown } = useUrlSearchDraft('name')
 
-  const { data, isLoading, error } = useGetCharactersQuery({ page, name })
+  const { data, isLoading, error } = useGetCharactersQuery({ page, name, status })
 
   if (isLoading) return <LoadingState message="Loading characters..." />
   if (isNotFoundError(error)) {
@@ -36,9 +35,9 @@ export const CharactersPage = () => {
   }
 
   const handlePageChange = (newPage: number) => {
-    const params = new URLSearchParams(searchParams)
-    params.set('page', String(newPage))
-    setSearchParams(params)
+    updateParams(searchParams, setSearchParams, {
+      page: String(newPage),
+    })
   }
 
   return (
@@ -52,6 +51,7 @@ export const CharactersPage = () => {
         onValueChange={onValueChange}
         onKeyDown={onKeyDown}
       />
+      <CharacterFilters />
 
       <div className={s.list}>
         {data.results.map(char => (
