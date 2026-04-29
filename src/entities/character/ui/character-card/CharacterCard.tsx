@@ -1,5 +1,6 @@
 import type { Character } from '@/entities/character/model/types'
 import s from './CharacterCard.module.scss'
+import { Link } from 'react-router-dom'
 
 type CharacterCardProps = {
   character: Character
@@ -14,7 +15,9 @@ export const CharacterCard = ({ character }: CharacterCardProps) => {
         <img src={image} alt={name} />
       </div>
       <div className={s.right}>
-        <h2>{name}</h2>
+        <Link to={`/characters/${character.id}`}>
+          <h2>{name}</h2>
+        </Link>
         <p>
           {status} - {species}
         </p>
