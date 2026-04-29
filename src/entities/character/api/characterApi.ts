@@ -8,7 +8,7 @@ export const characterApi = baseApi.injectEndpoints({
         url: 'character',
         params: {
           page,
-          ...(name ? { name } : {}),
+          ...(name?.trim() ? { name: name.trim() } : {}),
         },
       }),
     }),
