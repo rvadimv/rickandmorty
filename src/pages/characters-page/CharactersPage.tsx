@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { LoadingState } from '@/shared/ui/loading-state/LoadingState'
 import { ErrorState } from '@/shared/ui/error-state/ErrorState'
 import { EmptyState } from '@/shared/ui/empty-state/EmptyState'
-import { isNotFoundError, parseApiError } from '@/shared/lib/parseApiError'
+import { isNotFoundError, apiError } from '@/shared/lib/apiError.ts'
 import { Search } from '@/shared/ui/search/Search'
 import { useUrlSearchDraft } from '@/shared/lib/hooks/useUrlSearchDraft'
 import { Pagination } from '@/shared/ui/pagination/Pagination'
@@ -29,7 +29,7 @@ export const CharactersPage = () => {
     return <EmptyState message="No characters found" />
   }
   if (error) {
-    return <ErrorState message={parseApiError(error, 'Failed to load characters')} />
+    return <ErrorState message={apiError(error, 'Failed to load characters')} />
   }
   if (!data?.results.length) {
     return <EmptyState message="No characters found" />

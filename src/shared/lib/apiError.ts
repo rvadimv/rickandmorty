@@ -39,7 +39,7 @@ export function isNotFoundError(
   return !!error && 'status' in error && error.status === 404
 }
 
-export const parseApiError = (
+export const apiError = (
   error: FetchBaseQueryError | SerializedError | undefined,
   fallbackMessage = 'Something went wrong',
 ) => {
