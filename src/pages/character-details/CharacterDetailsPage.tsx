@@ -1,5 +1,5 @@
 import { useGetCharacterQuery } from '@/entities/character/api/characterApi'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { LoadingState } from '@/shared/ui/loading-state/LoadingState'
 import { apiError, isNotFoundError } from '@/shared/lib/apiError'
 import { EmptyState } from '@/shared/ui/empty-state/EmptyState'
@@ -11,6 +11,8 @@ export const CharacterDetailsPage = () => {
   const { data, isLoading, error } = useGetCharacterQuery(id ?? '', {
     skip: !id,
   })
+
+  const navigate = useNavigate()
 
   if (!id) {
     return <EmptyState message="No character found" />
@@ -29,6 +31,7 @@ export const CharacterDetailsPage = () => {
 
   return (
     <div>
+      <button onClick={() => navigate('/characters')}>Back</button>
       <img src={data.image} alt={data.name} />
       <p>{data.name}</p>
       <p>{data.location.name}</p>
