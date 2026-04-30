@@ -17,11 +17,11 @@ import s from './CharactersPage.module.scss'
 export const CharactersPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const { page, name, status } = getCharactersParams(searchParams)
+  const { page, name, status, gender } = getCharactersParams(searchParams)
 
   const { value, onSearch, onValueChange, onKeyDown } = useUrlSearchDraft('name')
 
-  const { data, isLoading, error } = useGetCharactersQuery({ page, name, status })
+  const { data, isLoading, error } = useGetCharactersQuery({ page, name, status, gender })
 
   if (isLoading) return <LoadingState message="Loading characters..." />
   if (isNotFoundError(error)) {

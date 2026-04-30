@@ -5,14 +5,15 @@ export const characterApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     getCharacters: builder.query<
       CharactersResponse,
-      { page: number; name?: string; status?: string }
+      { page: number; name?: string; status?: string; gender?: string }
     >({
-      query: ({ page, name, status }) => ({
+      query: ({ page, name, status, gender }) => ({
         url: 'character',
         params: {
           page,
           ...(name?.trim() ? { name: name.trim() } : {}),
           ...(status ? { status } : {}),
+          ...(gender ? { gender } : {}),
         },
       }),
     }),
