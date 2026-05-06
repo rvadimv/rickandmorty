@@ -21,24 +21,27 @@ export const CharactersPage = () => {
 
   const { value, onSearch, onValueChange, onKeyDown } = useUrlSearchDraft('name')
 
-  const { data, isLoading, error } = useGetCharactersQuery({ page, name, status, gender })
-
-  if (isLoading) return <LoadingState message="Loading characters..." />
-  if (isNotFoundError(error)) {
-    return <EmptyState message="No characters found" />
-  }
-  if (error) {
-    return <ErrorState message={apiError(error, 'Failed to load characters')} />
-  }
-  if (!data?.results.length) {
-    return <EmptyState message="No characters found" />
-  }
+  const { data, isLoading, isFetching, error } = useGetCharactersQuery({
+    page,
+    name,
+    status,
+    gender,
+  })
 
   const handlePageChange = (newPage: number) => {
     updateParams(searchParams, setSearchParams, {
       page: String(newPage),
     })
   }
+
+  const characters = data?.results ?? []
+
+  const isNotFound = isNotFoundError(error)
+  const isCommonError = Boolean(error && !isNotFound)
+  const isRequestInProgress = isLoading || isFetching
+
+  const isEmpty = !isRequestInProgress && !error && characters.length === 0
+  const canShowCharacters = !isRequestInProgress && !error && characters.length > 0
 
   return (
     <>
@@ -56,12 +59,33 @@ export const CharactersPage = () => {
           <CharacterFilters />
         </div>
       </div>
-      <div className={s.list}>
-        {data.results.map(char => (
-          <CharacterCard key={char.id} character={char} />
-        ))}
+      <div className={s.content}>
+        {isRequestInProgress && <LoadingState message="Loading characters..." />}
+
+        {isNotFound && !isRequestInProgress && <EmptyState message="No characters found" />}
+
+        {isCommonError && !isRequestInProgress && (
+          <ErrorState message={apiError(error, 'Failed to load characters')} />
+        )}
+
+        {isEmpty && <EmptyState message="No characters found" />}
+
+        {canShowCharacters && data && (
+          <>
+            <div className={s.list}>
+              {characters.map(char => (
+                <CharacterCard key={char.id} character={char} />
+              ))}
+            </div>
+
+            <Pagination
+              totalPages={data.info.pages}
+              currentPage={page}
+              onPageChange={handlePageChange}
+            />
+          </>
+        )}
       </div>
-      <Pagination totalPages={data.info.pages} currentPage={page} onPageChange={handlePageChange} />
     </>
   )
 }
