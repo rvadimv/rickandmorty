@@ -42,8 +42,6 @@ export const CharactersPage = () => {
 
   return (
     <>
-      <h1>Characters</h1>
-
       <Search
         placeholder="Search Characters"
         value={value}
