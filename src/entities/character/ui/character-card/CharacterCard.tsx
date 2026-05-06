@@ -12,22 +12,25 @@ export const CharacterCard = ({ character }: CharacterCardProps) => {
   const locationFrom = useLocation()
 
   return (
-    <div className={s.characterCard}>
-      <div className={s.left}>
-        <img src={image} alt={name} />
-      </div>
-      <div className={s.right}>
+    <article className={s.card}>
+      <img src={image} alt={name} className={s.img} />
+      <div className={s.content}>
         <Link to={`/characters/${character.id}`} state={{ from: locationFrom }}>
-          <h2>{name}</h2>
+          <h2 className={s.name}>{name}</h2>
         </Link>
-        <p>
+        <span>
           {status} - {species}
+        </span>
+        <p>
+          <span>Last known location:</span>
+          <br />
+          {location.name}
         </p>
-        <p>Last known location:</p>
-        <p>{location.name}</p>
-        <p>First seen in:</p>
-        <p>{episode[0]}</p>
+        <p>
+          <span>First seen in:</span> <br />
+          {episode[0]}
+        </p>
       </div>
-    </div>
+    </article>
   )
 }
