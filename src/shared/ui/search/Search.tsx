@@ -1,4 +1,5 @@
 import type { ChangeEventHandler, KeyboardEventHandler } from 'react'
+import s from './Search.module.scss'
 
 type Props = {
   value: string
@@ -12,17 +13,18 @@ export const Search = (props: Props) => {
   const { value, placeholder, onSearch, onValueChange, onKeyDown } = props
 
   return (
-    <div>
+    <>
       <input
         value={value}
         onChange={onValueChange}
         onKeyDown={onKeyDown}
         type="text"
         placeholder={placeholder}
+        className={s.search}
       />
-      <button onClick={onSearch} disabled={!value.trim()}>
+      <button onClick={onSearch} disabled={!value.trim()} className={s.button}>
         Search
       </button>
-    </div>
+    </>
   )
 }

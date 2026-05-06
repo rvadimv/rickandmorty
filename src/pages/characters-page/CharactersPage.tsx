@@ -42,15 +42,20 @@ export const CharactersPage = () => {
 
   return (
     <>
-      <Search
-        placeholder="Search Characters"
-        value={value}
-        onSearch={onSearch}
-        onValueChange={onValueChange}
-        onKeyDown={onKeyDown}
-      />
-      <CharacterFilters />
-
+      <div className={s.toolbar}>
+        <div className={s.searchWrap}>
+          <Search
+            placeholder="Search Characters"
+            value={value}
+            onSearch={onSearch}
+            onValueChange={onValueChange}
+            onKeyDown={onKeyDown}
+          />
+        </div>
+        <div className={s.filters}>
+          <CharacterFilters />
+        </div>
+      </div>
       <div className={s.list}>
         {data.results.map(char => (
           <CharacterCard key={char.id} character={char} />
