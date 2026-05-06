@@ -15,13 +15,13 @@ export const CharacterFilters = () => {
 
   return (
     <div className={s.filtersWrap}>
-      <select value={status} onChange={handleSelect('status')}>
+      <select value={status} onChange={handleSelect('status')} className={s.select}>
         <option value="">All</option>
         <option value="alive">Alive</option>
         <option value="dead">Dead</option>
         <option value="unknown">Unknown</option>
       </select>
-      <select value={gender} onChange={handleSelect('gender')}>
+      <select value={gender} onChange={handleSelect('gender')} className={s.select}>
         <option value="">All</option>
         <option value="female">Female</option>
         <option value="male">Male</option>
