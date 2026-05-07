@@ -47,9 +47,12 @@ export const CharactersPage = () => {
     ),
   ].join(',')
 
-  const { data: episodes = [] } = useGetEpisodesByIdsQuery(firstEpisodeIds, {
-    skip: !firstEpisodeIds,
-  })
+  const { data: episodes = [], isFetching: isEpisodesFetching } = useGetEpisodesByIdsQuery(
+    firstEpisodeIds,
+    {
+      skip: !firstEpisodeIds,
+    },
+  )
 
   const episodeNamesById = new Map(episodes.map(episode => [String(episode.id), episode.name]))
 
@@ -102,6 +105,7 @@ export const CharactersPage = () => {
                     key={character.id}
                     character={character}
                     firstEpisodeName={firstEpisodeName}
+                    isEpisodeLoading={isEpisodesFetching}
                   />
                 )
               })}
