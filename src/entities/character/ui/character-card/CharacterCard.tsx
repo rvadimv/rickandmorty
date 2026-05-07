@@ -13,7 +13,7 @@ export const CharacterCard = ({
   firstEpisodeName,
   isEpisodeLoading,
 }: CharacterCardProps) => {
-  const { name, image, status, episode, species, location } = character
+  const { name, image, status, species, location } = character
 
   const locationFrom = useLocation()
 
