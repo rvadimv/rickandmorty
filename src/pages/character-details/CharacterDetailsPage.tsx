@@ -8,6 +8,8 @@ import { apiError, isNotFoundError } from '@/shared/lib/apiError'
 import { EmptyState } from '@/shared/ui/empty-state/EmptyState'
 import { ErrorState } from '@/shared/ui/error-state/ErrorState'
 
+import s from './CharacterDetailsPage.module.scss'
+
 type LocationState = {
   from?: Location
 }
@@ -63,40 +65,73 @@ export const CharacterDetailsPage = () => {
   }
 
   return (
-    <section>
-      <button onClick={handleBack}>Back</button>
-      <img src={data.image} alt={data.name} />
-      <p>{data.name}</p>
-      <p>{data.location.name}</p>
-      <p>{data.status}</p>
-      <p>{data.origin.name}</p>
-      <p>{data.gender}</p>
-      <p>{data.species}</p>
-      <p>{data.created}</p>
-      <p>{data.type || 'Unknown type'}</p>
-      <p>
-        First seen in:{' '}
-        {isEpisodesFetching
-          ? 'Loading episode...'
-          : episodesError
-            ? 'Unknown episode'
-            : (firstEpisode?.name ?? 'Unknown episode')}
-      </p>
-      <h2>Episodes</h2>
+    <section className={s.page}>
+      <button className={s.back} type="button" onClick={handleBack}>
+        ← Back
+      </button>
+      <article className={s.card}>
+        <img className={s.img} src={data.image} alt={data.name} />
+        <div className={s.content}>
+          <h1 className={s.name}>{data.name}</h1>
+          <div className={s.meta}>
+            <p className={s.item}>
+              <span className={s.label}>Status: </span>
+              {data.status}
+            </p>
 
-      {isEpisodesFetching && <p>Loading episodes...</p>}
+            <p className={s.item}>
+              <span className={s.label}>Species: </span>
+              {data.species}
+            </p>
 
-      {episodesError && !isEpisodesFetching && <p>Failed to load episodes</p>}
+            <p className={s.item}>
+              <span className={s.label}>Gender: </span>
+              {data.gender}
+            </p>
 
-      {!isEpisodesFetching && !episodesError && episodes.length > 0 && (
-        <ul>
-          {episodes.map(episode => (
-            <li key={episode.id}>
-              {episode.episode} — {episode.name}
-            </li>
-          ))}
-        </ul>
-      )}
+            <p className={s.item}>
+              <span className={s.label}>Type: </span>
+              {data.type || 'Unknown type'}
+            </p>
+
+            <p className={s.item}>
+              <span className={s.label}>Last known location: </span>
+              {data.location.name}
+            </p>
+
+            <p className={s.item}>
+              <span className={s.label}>Origin: </span>
+              {data.origin.name}
+            </p>
+
+            <p className={s.item}>
+              <span className={s.label}>First seen in: </span>
+              {isEpisodesFetching
+                ? 'Loading episode...'
+                : episodesError
+                  ? 'Unknown episode'
+                  : (firstEpisode?.name ?? 'Unknown episode')}
+            </p>
+          </div>
+        </div>
+      </article>
+      <section className={s.episodes}>
+        <h2 className={s.episodesTitle}>Episodes</h2>
+
+        {isEpisodesFetching && <p>Loading episodes...</p>}
+
+        {episodesError && !isEpisodesFetching && <p>Failed to load episodes</p>}
+
+        {!isEpisodesFetching && !episodesError && episodes.length > 0 && (
+          <ul className={s.episodeList}>
+            {episodes.map(episode => (
+              <li key={episode.id} className={s.episodeItem}>
+                {episode.episode} - {episode.name} - {episode.air_date}
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </section>
   )
 }
