@@ -22,11 +22,6 @@ export const characterApi = baseApi.injectEndpoints({
         url: `character/${id}`,
       }),
     }),
-    getEpisode: builder.query<Episode, string>({
-      query: id => ({
-        url: `episode/${id}`,
-      }),
-    }),
     getEpisodesByIds: builder.query<Episode[], string>({
       query: ids => ({
         url: `episode/${ids}`,
@@ -38,9 +33,5 @@ export const characterApi = baseApi.injectEndpoints({
   }),
 })
 
-export const {
-  useGetCharactersQuery,
-  useGetCharacterQuery,
-  useGetEpisodeQuery,
-  useGetEpisodesByIdsQuery,
-} = characterApi
+export const { useGetCharactersQuery, useGetCharacterQuery, useGetEpisodesByIdsQuery } =
+  characterApi
