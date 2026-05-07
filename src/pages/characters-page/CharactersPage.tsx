@@ -1,4 +1,7 @@
-import { useGetCharactersQuery } from '@/entities/character/api/characterApi'
+import {
+  useGetCharactersQuery,
+  useGetEpisodesByIdsQuery,
+} from '@/entities/character/api/characterApi'
 import { CharacterCard } from '@/entities/character/ui/character-card/CharacterCard'
 import { useSearchParams } from 'react-router-dom'
 import { LoadingState } from '@/shared/ui/loading-state/LoadingState'
@@ -35,6 +38,20 @@ export const CharactersPage = () => {
   }
 
   const characters = data?.results ?? []
+
+  const firstEpisodeIds = [
+    ...new Set(
+      characters
+        .map(character => character.episode[0]?.split('/').at(-1))
+        .filter((id): id is string => Boolean(id)),
+    ),
+  ].join(',')
+
+  const { data: episodes = [] } = useGetEpisodesByIdsQuery(firstEpisodeIds, {
+    skip: !firstEpisodeIds,
+  })
+
+  const episodeNamesById = new Map(episodes.map(episode => [String(episode.id), episode.name]))
 
   const isNotFound = isNotFoundError(error)
   const isCommonError = Boolean(error && !isNotFound)
@@ -73,9 +90,21 @@ export const CharactersPage = () => {
         {canShowCharacters && data && (
           <>
             <div className={s.list}>
-              {characters.map(char => (
-                <CharacterCard key={char.id} character={char} />
-              ))}
+              {characters.map(character => {
+                const firstEpisodeId = character.episode[0]?.split('/').at(-1)
+
+                const firstEpisodeName = firstEpisodeId
+                  ? episodeNamesById.get(firstEpisodeId)
+                  : undefined
+
+                return (
+                  <CharacterCard
+                    key={character.id}
+                    character={character}
+                    firstEpisodeName={firstEpisodeName}
+                  />
+                )
+              })}
             </div>
 
             <Pagination

@@ -1,4 +1,4 @@
-import { useGetCharacterQuery } from '@/entities/character/api/characterApi'
+import { useGetCharacterQuery, useGetEpisodeQuery } from '@/entities/character/api/characterApi'
 import { useLocation, useNavigate, useParams, type Location } from 'react-router-dom'
 import { LoadingState } from '@/shared/ui/loading-state/LoadingState'
 import { apiError, isNotFoundError } from '@/shared/lib/apiError'
@@ -14,6 +14,17 @@ export const CharacterDetailsPage = () => {
 
   const { data, isLoading, error } = useGetCharacterQuery(id ?? '', {
     skip: !id,
+  })
+
+  const firstEpisodeUrl = data?.episode[0]
+  const firstEpisodeId = firstEpisodeUrl?.split('/').at(-1)
+
+  const {
+    data: firstEpisode,
+    isLoading: isEpisodeLoading,
+    error: episodeError,
+  } = useGetEpisodeQuery(firstEpisodeId ?? '', {
+    skip: !firstEpisodeId,
   })
 
   const location = useLocation() as Location<LocationState>
@@ -55,6 +66,14 @@ export const CharacterDetailsPage = () => {
       <p>{data.species}</p>
       <p>{data.created}</p>
       <p>{data.type}</p>
+      <p>
+        First seen in:{' '}
+        {isEpisodeLoading
+          ? 'Loading episode...'
+          : episodeError
+            ? 'Unknown episode'
+            : firstEpisode?.name}
+      </p>
     </div>
   )
 }

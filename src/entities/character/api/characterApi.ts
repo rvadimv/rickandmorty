@@ -1,5 +1,5 @@
 import { baseApi } from '@/shared/api/baseApi'
-import type { Character, CharactersResponse } from '@/entities/character/model/types'
+import type { Character, CharactersResponse, Episode } from '@/entities/character/model/types'
 
 export const characterApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -22,7 +22,25 @@ export const characterApi = baseApi.injectEndpoints({
         url: `character/${id}`,
       }),
     }),
+    getEpisode: builder.query<Episode, string>({
+      query: id => ({
+        url: `episode/${id}`,
+      }),
+    }),
+    getEpisodesByIds: builder.query<Episode[], string>({
+      query: ids => ({
+        url: `episode/${ids}`,
+      }),
+      transformResponse: (response: Episode | Episode[]) => {
+        return Array.isArray(response) ? response : [response]
+      },
+    }),
   }),
 })
 
-export const { useGetCharactersQuery, useGetCharacterQuery } = characterApi
+export const {
+  useGetCharactersQuery,
+  useGetCharacterQuery,
+  useGetEpisodeQuery,
+  useGetEpisodesByIdsQuery,
+} = characterApi
