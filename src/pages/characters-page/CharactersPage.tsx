@@ -37,6 +37,10 @@ export const CharactersPage = () => {
     })
   }
 
+  const handleClearFilters = () => {
+    setSearchParams({})
+  }
+
   const characters = data?.results ?? []
 
   const firstEpisodeIds = [
@@ -82,13 +86,25 @@ export const CharactersPage = () => {
       <div className={s.content}>
         {isRequestInProgress && <LoadingState message="Loading characters..." />}
 
-        {isNotFound && !isRequestInProgress && <EmptyState message="No characters found" />}
+        {isNotFound && !isRequestInProgress && (
+          <EmptyState
+            message="No characters found"
+            actionText="Clear filters"
+            onAction={handleClearFilters}
+          />
+        )}
 
         {isCommonError && !isRequestInProgress && (
           <ErrorState message={apiError(error, 'Failed to load characters')} />
         )}
 
-        {isEmpty && <EmptyState message="No characters found" />}
+        {isEmpty && (
+          <EmptyState
+            message="No characters found"
+            actionText="Clear filters"
+            onAction={handleClearFilters}
+          />
+        )}
 
         {canShowCharacters && data && (
           <>

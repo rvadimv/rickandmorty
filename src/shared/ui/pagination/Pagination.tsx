@@ -26,21 +26,23 @@ export const Pagination = (props: Props) => {
 
   return (
     <div className={s.pagination}>
-      <button onClick={handlePrev} disabled={currentPage === 1}>
+      <button type="button" onClick={handlePrev} disabled={currentPage === 1}>
         Prev
       </button>
       <div className={s.pages}>
         {pagesArray.map(p => (
           <button
+            type="button"
             key={p}
             className={currentPage === p ? s.active : ''}
+            aria-current={currentPage === p ? 'page' : undefined}
             onClick={() => onPageChange(p)}
           >
             {p}
           </button>
         ))}
       </div>
-      <button onClick={handleNext} disabled={currentPage === totalPages}>
+      <button type="button" onClick={handleNext} disabled={currentPage === totalPages}>
         Next
       </button>
     </div>

@@ -15,6 +15,7 @@ export const Search = (props: Props) => {
   return (
     <>
       <input
+        aria-label="Search"
         value={value}
         onChange={onValueChange}
         onKeyDown={onKeyDown}
@@ -22,7 +23,7 @@ export const Search = (props: Props) => {
         placeholder={placeholder}
         className={s.search}
       />
-      <button onClick={onSearch} disabled={!value.trim()} className={s.button}>
+      <button type="button" onClick={onSearch} disabled={!value.trim()} className={s.button}>
         Search
       </button>
     </>
