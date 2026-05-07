@@ -4,10 +4,11 @@ import { Link, useLocation } from 'react-router-dom'
 
 type CharacterCardProps = {
   character: Character
+  firstEpisodeName?: string
 }
 
-export const CharacterCard = ({ character }: CharacterCardProps) => {
-  const { name, image, episode, status, species, location } = character
+export const CharacterCard = ({ character, firstEpisodeName }: CharacterCardProps) => {
+  const { name, image, status, episode, species, location } = character
 
   const locationFrom = useLocation()
 
@@ -26,10 +27,7 @@ export const CharacterCard = ({ character }: CharacterCardProps) => {
           <br />
           {location.name}
         </p>
-        <p>
-          <span>First seen in:</span> <br />
-          {episode[0]}
-        </p>
+        <p>First seen in: {firstEpisodeName ?? 'Unknown episode'}</p>
       </div>
     </article>
   )
