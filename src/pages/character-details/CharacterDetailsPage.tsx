@@ -1,4 +1,7 @@
-import { useGetCharacterQuery, useGetEpisodeQuery } from '@/entities/character/api/characterApi'
+import {
+  useGetCharacterQuery,
+  useGetEpisodesByIdsQuery,
+} from '@/entities/character/api/characterApi'
 import { useLocation, useNavigate, useParams, type Location } from 'react-router-dom'
 import { LoadingState } from '@/shared/ui/loading-state/LoadingState'
 import { apiError, isNotFoundError } from '@/shared/lib/apiError'
@@ -16,16 +19,20 @@ export const CharacterDetailsPage = () => {
     skip: !id,
   })
 
-  const firstEpisodeUrl = data?.episode[0]
-  const firstEpisodeId = firstEpisodeUrl?.split('/').at(-1)
+  const episodeIds = data?.episode
+    .map(url => url.split('/').at(-1))
+    .filter((episodeId): episodeId is string => Boolean(episodeId))
+    .join(',')
 
   const {
-    data: firstEpisode,
-    isLoading: isEpisodeLoading,
-    error: episodeError,
-  } = useGetEpisodeQuery(firstEpisodeId ?? '', {
-    skip: !firstEpisodeId,
+    data: episodes = [],
+    isFetching: isEpisodesFetching,
+    error: episodesError,
+  } = useGetEpisodesByIdsQuery(episodeIds ?? '', {
+    skip: !episodeIds,
   })
+
+  const firstEpisode = episodes[0]
 
   const location = useLocation() as Location<LocationState>
   const navigate = useNavigate()
@@ -42,8 +49,9 @@ export const CharacterDetailsPage = () => {
   if (!id) {
     return <EmptyState message="No character found" />
   }
-
-  if (isLoading) return <LoadingState message="Loading character..." />
+  if (isLoading) {
+    return <LoadingState message="Loading character..." />
+  }
   if (isNotFoundError(error)) {
     return <EmptyState message="No character found" />
   }
@@ -55,7 +63,7 @@ export const CharacterDetailsPage = () => {
   }
 
   return (
-    <div>
+    <section>
       <button onClick={handleBack}>Back</button>
       <img src={data.image} alt={data.name} />
       <p>{data.name}</p>
@@ -65,15 +73,30 @@ export const CharacterDetailsPage = () => {
       <p>{data.gender}</p>
       <p>{data.species}</p>
       <p>{data.created}</p>
-      <p>{data.type}</p>
+      <p>{data.type || 'Unknown type'}</p>
       <p>
         First seen in:{' '}
-        {isEpisodeLoading
+        {isEpisodesFetching
           ? 'Loading episode...'
-          : episodeError
+          : episodesError
             ? 'Unknown episode'
-            : firstEpisode?.name}
+            : (firstEpisode?.name ?? 'Unknown episode')}
       </p>
-    </div>
+      <h2>Episodes</h2>
+
+      {isEpisodesFetching && <p>Loading episodes...</p>}
+
+      {episodesError && !isEpisodesFetching && <p>Failed to load episodes</p>}
+
+      {!isEpisodesFetching && !episodesError && episodes.length > 0 && (
+        <ul>
+          {episodes.map(episode => (
+            <li key={episode.id}>
+              {episode.episode} — {episode.name}
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   )
 }
