@@ -1,14 +1,90 @@
-.active {
-  color: #00eaff;
-}
 .pagination {
-  width: 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 16px;
-  font-size: 18px;
+  gap: 12px;
+
+  width: 100%;
+  margin-top: 28px;
 }
+
 .pages {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 6px;
+}
+
+.control,
+.page {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+
+  background: rgb(60, 62, 68);
+  color: rgba(255, 255, 255, 0.86);
+
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.control {
+  min-width: 58px;
+}
+
+.page:hover:not(:disabled),
+.control:hover:not(:disabled) {
+  border-color: #97ce4c;
+  color: #97ce4c;
+}
+
+.active {
+  border-color: #97ce4c;
+  background: #97ce4c;
+  color: #1f1f27;
+  font-weight: 700;
+}
+
+.control:disabled,
+.page:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.control:focus-visible,
+.page:focus-visible {
+  outline: 2px solid #97ce4c;
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .pagination {
+    gap: 8px;
+  }
+
+  .pages {
+    gap: 4px;
+  }
+
+  .control,
+  .page {
+    min-width: 30px;
+    height: 30px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+
+  .control {
+    min-width: 52px;
+  }
 }
