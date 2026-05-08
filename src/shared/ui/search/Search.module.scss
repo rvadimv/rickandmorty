@@ -2,44 +2,76 @@
   flex: 1;
 
   width: 100%;
-  height: 36px;
-
-  border: 1px solid rgba(31, 31, 39, 0.08);
+  height: 38px;
   padding: 0 16px;
-  border-radius: 4px;
-  background-color: #f8f7f7;
-  color: #1f1f27;
 
-  transition: background 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+
+  background: rgb(60, 62, 68);
+  color: rgba(255, 255, 255, 0.92);
+
+  font: inherit;
+  font-size: 15px;
+
+  outline: none;
+
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    color 0.18s ease;
 
   &::placeholder {
-    color: rgba(31, 31, 39, 0.3);
+    color: rgba(255, 255, 255, 0.42);
+  }
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.22);
+    background: rgb(64, 67, 74);
   }
 
   &:focus {
-    outline: none;
-    border-color: rgba(31, 31, 39, 0.16);
+    border-color: rgba(151, 206, 76, 0.9);
+    background: rgb(66, 69, 76);
   }
 }
+
 .button {
   margin-left: 10px;
+  height: 38px;
   padding: 0 16px;
-  color: #fff;
-  border-radius: 4px;
-  background: rgb(60 62 68 / 0.6);
 
-  transition: background 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
 
-  &:not(:disabled) {
-    background: rgb(60, 62, 68);
+  background: rgb(60, 62, 68);
+  color: rgba(255, 255, 255, 0.88);
+
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    color 0.18s ease,
+    opacity 0.18s ease;
+
+  &:not(:disabled):hover {
+    border-color: rgba(151, 206, 76, 0.75);
+    background: rgb(64, 67, 74);
+    color: #97ce4c;
+  }
+
+  &:focus-visible {
+    border-color: rgba(151, 206, 76, 0.9);
+    outline: none;
   }
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.6;
-  }
-
-  &:not(:disabled):hover {
-    background: rgb(240, 141, 73, 1);
+    opacity: 0.45;
   }
 }

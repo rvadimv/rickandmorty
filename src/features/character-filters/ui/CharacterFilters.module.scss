@@ -1,33 +1,43 @@
-.filtersWrap {
+.filters {
   display: flex;
-  flex-direction: row;
-  gap: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .select {
-  color: #1f1f27;
-  min-width: 100px;
-  height: 32px;
+  min-width: 110px;
+  height: 38px;
+  padding: 0 34px 0 12px;
 
-  padding: 0 32px 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
 
-  border: 1px solid rgba(31, 31, 39, 0.08);
-  border-radius: 4px;
-
-  background-color: #f8f7f7;
-
-  font-size: 14px;
-  cursor: pointer;
-
-  appearance: none;
-
+  background-color: rgb(60, 62, 68);
   background-image: url('../../../shared/assets/icons/arrow-down.svg');
   background-repeat: no-repeat;
   background-position: right 12px center;
-  background-size: 14px;
+  background-size: 12px;
+
+  color: rgba(255, 255, 255, 0.92);
+
+  font: inherit;
+  font-size: 15px;
+
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.22);
+    background-color: rgb(64, 67, 74);
+  }
 
   &:focus {
-    outline: none;
-    border-color: rgba(31, 31, 39, 0.16);
+    border-color: rgba(151, 206, 76, 0.9);
+    background-color: rgb(66, 69, 76);
   }
 }
