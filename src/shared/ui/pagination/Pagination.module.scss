@@ -42,7 +42,7 @@
   min-width: 58px;
 }
 
-.page:hover:not(:disabled),
+.page:hover:not(:disabled):not(.active),
 .control:hover:not(:disabled) {
   border-color: #97ce4c;
   color: #97ce4c;
@@ -54,7 +54,6 @@
   color: #1f1f27;
   font-weight: 700;
 }
-
 .control:disabled,
 .page:disabled {
   opacity: 0.4;

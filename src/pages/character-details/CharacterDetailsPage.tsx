@@ -76,45 +76,33 @@ export const CharacterDetailsPage = () => {
         <img className={s.img} src={data.image} alt={data.name} />
         <div className={s.content}>
           <h1 className={s.name}>{data.name}</h1>
-          <div className={s.meta}>
-            <p className={s.item}>
-              <span className={s.label}>Status: </span>
-              {data.status}
-            </p>
+          <div className={s.infoGrid}>
+            <span className={s.label}>Status:</span>
+            <span className={s.value}>{data.status}</span>
 
-            <p className={s.item}>
-              <span className={s.label}>Species: </span>
-              {data.species}
-            </p>
+            <span className={s.label}>Species:</span>
+            <span className={s.value}>{data.species}</span>
 
-            <p className={s.item}>
-              <span className={s.label}>Gender: </span>
-              {data.gender}
-            </p>
+            <span className={s.label}>Gender:</span>
+            <span className={s.value}>{data.gender}</span>
 
-            <p className={s.item}>
-              <span className={s.label}>Type: </span>
-              {data.type || 'Unknown type'}
-            </p>
+            <span className={s.label}>Type:</span>
+            <span className={s.value}>{data.type || 'Unknown type'}</span>
 
-            <p className={s.item}>
-              <span className={s.label}>Last known location: </span>
-              {data.location.name}
-            </p>
+            <span className={s.label}>Last known location:</span>
+            <span className={s.value}>{data.location.name}</span>
 
-            <p className={s.item}>
-              <span className={s.label}>Origin: </span>
-              {data.origin.name}
-            </p>
+            <span className={s.label}>Origin:</span>
+            <span className={s.value}>{data.origin.name}</span>
 
-            <p className={s.item}>
-              <span className={s.label}>First seen in: </span>
+            <span className={s.label}>First seen in:</span>
+            <span className={s.value}>
               {isEpisodesFetching
                 ? 'Loading episode...'
                 : episodesError
                   ? 'Unknown episode'
                   : (firstEpisode?.name ?? 'Unknown episode')}
-            </p>
+            </span>
           </div>
         </div>
       </article>
@@ -129,7 +117,9 @@ export const CharacterDetailsPage = () => {
           <ul className={s.episodeList}>
             {episodes.map(episode => (
               <li key={episode.id} className={s.episodeItem}>
-                {episode.episode} - {episode.name} - {episode.air_date}
+                <span className={s.episodeCode}>{episode.episode}</span>
+                <span className={s.episodeName}>{episode.name}</span>
+                <span className={s.episodeDate}>{episode.air_date}</span>
               </li>
             ))}
           </ul>
