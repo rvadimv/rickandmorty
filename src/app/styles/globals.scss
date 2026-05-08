@@ -1,3 +1,5 @@
+@use '../../shared/styles/fonts';
+
 *,
 *::before,
 *::after {
@@ -21,6 +23,19 @@ p,
 ul,
 ol {
   margin: 0;
+}
+
+body {
+  font-size: 14px;
+  background: #24282f;
+  color: #fff;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
 }
 
 ul,
