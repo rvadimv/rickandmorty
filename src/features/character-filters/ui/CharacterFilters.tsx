@@ -14,7 +14,7 @@ export const CharacterFilters = () => {
   }
 
   return (
-    <div className={s.filtersWrap}>
+    <div className={s.filters}>
       <select
         aria-label="Filter by status"
         value={status}
