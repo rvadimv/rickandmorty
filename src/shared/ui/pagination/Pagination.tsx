@@ -25,26 +25,33 @@ export const Pagination = (props: Props) => {
   }
 
   return (
-    <div className={s.pagination}>
-      <button type="button" onClick={handlePrev} disabled={currentPage === 1}>
+    <nav className={s.pagination} aria-label="Characters pagination">
+      <button className={s.control} type="button" onClick={handlePrev} disabled={currentPage === 1}>
         Prev
       </button>
+
       <div className={s.pages}>
-        {pagesArray.map(p => (
+        {pagesArray.map(page => (
           <button
+            key={page}
+            className={currentPage === page ? `${s.page} ${s.active}` : s.page}
             type="button"
-            key={p}
-            className={currentPage === p ? s.active : ''}
-            aria-current={currentPage === p ? 'page' : undefined}
-            onClick={() => onPageChange(p)}
+            aria-current={currentPage === page ? 'page' : undefined}
+            onClick={() => onPageChange(page)}
           >
-            {p}
+            {page}
           </button>
         ))}
       </div>
-      <button type="button" onClick={handleNext} disabled={currentPage === totalPages}>
+
+      <button
+        className={s.control}
+        type="button"
+        onClick={handleNext}
+        disabled={currentPage === totalPages}
+      >
         Next
       </button>
-    </div>
+    </nav>
   )
 }
