@@ -63,5 +63,6 @@
 
   .image {
     width: 100%;
+    min-height: clamp(220px, 65vw, 320px);
   }
 }
