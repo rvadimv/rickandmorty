@@ -64,12 +64,9 @@ export const CharactersPage = () => {
 
   const isNotFound = isNotFoundError(error)
   const isCommonError = Boolean(error && !isNotFound)
+
   const isCharactersRequestInProgress = isLoading || isFetching
-
-  const isEpisodesInitialLoading =
-    Boolean(firstEpisodeIds) && isEpisodesFetching && episodes.length === 0
-
-  const isPageLoading = isCharactersRequestInProgress || isEpisodesInitialLoading
+  const isPageLoading = isCharactersRequestInProgress || isEpisodesFetching
 
   const isEmpty = !isPageLoading && !error && characters.length === 0
   const canShowCharacters = !isPageLoading && !error && characters.length > 0
