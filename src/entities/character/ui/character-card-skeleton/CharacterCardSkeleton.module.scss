@@ -1,0 +1,67 @@
+.card {
+  display: flex;
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgb(60, 62, 68);
+}
+
+.image {
+  width: 220px;
+  min-height: 220px;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, #3c3e44 25%, #4a4d55 50%, #3c3e44 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.content {
+  width: 100%;
+  padding: 20px;
+}
+
+.title,
+.lineShort,
+.block {
+  border-radius: 8px;
+  background: linear-gradient(90deg, #4a4d55 25%, #5a5d66 50%, #4a4d55 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.title {
+  width: 70%;
+  height: 18px;
+  margin-bottom: 16px;
+}
+
+.lineShort {
+  width: 40%;
+  height: 10px;
+  margin-bottom: 30px;
+}
+
+.block {
+  width: 85%;
+  height: 16px;
+  margin-bottom: 26px;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .image {
+    width: 100%;
+  }
+}

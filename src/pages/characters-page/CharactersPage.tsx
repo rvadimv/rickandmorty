@@ -4,7 +4,6 @@ import {
 } from '@/entities/character/api/characterApi'
 import { CharacterCard } from '@/entities/character/ui/character-card/CharacterCard'
 import { useSearchParams } from 'react-router-dom'
-import { LoadingState } from '@/shared/ui/loading-state/LoadingState'
 import { ErrorState } from '@/shared/ui/error-state/ErrorState'
 import { EmptyState } from '@/shared/ui/empty-state/EmptyState'
 import { isNotFoundError, apiError } from '@/shared/lib/apiError'
@@ -16,6 +15,7 @@ import { updateParams } from '@/shared/lib/updateParams'
 import { getCharactersParams } from '@/pages/characters-page/lib/useCharactersParams'
 
 import s from './CharactersPage.module.scss'
+import { CharacterCardSkeleton } from '@/entities/character/ui/character-card-skeleton/CharacterCardSkeleton'
 
 export const CharactersPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -58,14 +58,21 @@ export const CharactersPage = () => {
     },
   )
 
+  const skeletonCards = Array.from({ length: 10 }, (_, index) => index)
+
   const episodeNamesById = new Map(episodes.map(episode => [String(episode.id), episode.name]))
 
   const isNotFound = isNotFoundError(error)
   const isCommonError = Boolean(error && !isNotFound)
-  const isRequestInProgress = isLoading || isFetching
+  const isCharactersRequestInProgress = isLoading || isFetching
 
-  const isEmpty = !isRequestInProgress && !error && characters.length === 0
-  const canShowCharacters = !isRequestInProgress && !error && characters.length > 0
+  const isEpisodesInitialLoading =
+    Boolean(firstEpisodeIds) && isEpisodesFetching && episodes.length === 0
+
+  const isPageLoading = isCharactersRequestInProgress || isEpisodesInitialLoading
+
+  const isEmpty = !isPageLoading && !error && characters.length === 0
+  const canShowCharacters = !isPageLoading && !error && characters.length > 0
 
   return (
     <>
@@ -84,9 +91,15 @@ export const CharactersPage = () => {
         </div>
       </div>
       <div className={s.content}>
-        {isRequestInProgress && <LoadingState message="Loading characters..." />}
+        {isPageLoading && (
+          <div className={s.list}>
+            {skeletonCards.map(item => (
+              <CharacterCardSkeleton key={item} />
+            ))}
+          </div>
+        )}
 
-        {isNotFound && !isRequestInProgress && (
+        {isNotFound && !isPageLoading && (
           <EmptyState
             message="No characters found"
             actionText="Clear filters"
@@ -94,7 +107,7 @@ export const CharactersPage = () => {
           />
         )}
 
-        {isCommonError && !isRequestInProgress && (
+        {isCommonError && !isPageLoading && (
           <ErrorState message={apiError(error, 'Failed to load characters')} />
         )}
 

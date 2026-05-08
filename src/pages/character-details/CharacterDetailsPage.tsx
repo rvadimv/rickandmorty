@@ -3,10 +3,10 @@ import {
   useGetEpisodesByIdsQuery,
 } from '@/entities/character/api/characterApi'
 import { useLocation, useNavigate, useParams, type Location } from 'react-router-dom'
-import { LoadingState } from '@/shared/ui/loading-state/LoadingState'
 import { apiError, isNotFoundError } from '@/shared/lib/apiError'
 import { EmptyState } from '@/shared/ui/empty-state/EmptyState'
 import { ErrorState } from '@/shared/ui/error-state/ErrorState'
+import { CharacterDetailsSkeleton } from '@/pages/character-details/character-details-page/CharacterDetailsSkeleton'
 
 import s from './CharacterDetailsPage.module.scss'
 
@@ -48,17 +48,20 @@ export const CharacterDetailsPage = () => {
     }
   }
 
+  const isInitialPageLoading =
+    isLoading || (Boolean(episodeIds) && isEpisodesFetching && episodes.length === 0)
+
   if (!id) {
     return <EmptyState message="No character found" />
-  }
-  if (isLoading) {
-    return <LoadingState message="Loading character..." />
   }
   if (isNotFoundError(error)) {
     return <EmptyState message="No character found" />
   }
   if (error) {
     return <ErrorState message={apiError(error, 'Failed to load character')} />
+  }
+  if (isInitialPageLoading) {
+    return <CharacterDetailsSkeleton />
   }
   if (!data) {
     return <EmptyState message="No character found" />
