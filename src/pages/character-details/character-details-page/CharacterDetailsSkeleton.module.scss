@@ -3,29 +3,21 @@
   margin: 0 auto;
 }
 
-.back,
-.image,
-.title,
-.label,
-.value,
-.episodesTitle,
-.episode {
-  border-radius: 8px;
-  background: linear-gradient(90deg, #4a4d55 25%, #5a5d66 50%, #4a4d55 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s infinite;
-}
-
 .back {
-  width: 80px;
-  height: 24px;
+  width: 84px;
+  height: 20px;
   margin-bottom: 24px;
+  border-radius: 6px;
+
+  background: linear-gradient(90deg, #3c3e44 25%, #4a4d55 50%, #3c3e44 75%);
+  background-size: 200% 100%;
+
+  animation: shimmer 1.4s infinite;
 }
 
 .card {
   display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 32px;
+  grid-template-columns: 320px minmax(0, 1fr);
 
   overflow: hidden;
 
@@ -37,10 +29,11 @@
 
 .image {
   width: 100%;
-  min-height: 320px;
-  border-radius: 0;
+  height: 320px;
+
   background: linear-gradient(90deg, #3c3e44 25%, #4a4d55 50%, #3c3e44 75%);
   background-size: 200% 100%;
+
   animation: shimmer 1.4s infinite;
 }
 
@@ -49,52 +42,117 @@
 }
 
 .title {
-  width: 70%;
-  height: 32px;
+  width: 260px;
+  height: 38px;
   margin-bottom: 24px;
+  border-radius: 8px;
+
+  background: linear-gradient(90deg, #3c3e44 25%, #4a4d55 50%, #3c3e44 75%);
+  background-size: 200% 100%;
+
+  animation: shimmer 1.4s infinite;
 }
 
-.meta {
+.infoGrid {
   display: grid;
-  gap: 16px;
+  gap: 14px;
 }
 
-.item {
+.row {
   display: grid;
-  gap: 8px;
+  grid-template-columns: 150px 1fr;
+  gap: 20px;
 }
 
 .label {
-  width: 120px;
-  height: 12px;
+  width: 100px;
+  height: 16px;
+  border-radius: 6px;
+
+  background: linear-gradient(90deg, #3c3e44 25%, #4a4d55 50%, #3c3e44 75%);
+  background-size: 200% 100%;
+
+  animation: shimmer 1.4s infinite;
 }
 
 .value {
-  width: 65%;
+  width: 180px;
   height: 18px;
-}
+  border-radius: 6px;
 
-.episodesTitle {
-  width: 160px;
-  height: 28px;
-  margin-bottom: 16px;
+  background: linear-gradient(90deg, #3c3e44 25%, #4a4d55 50%, #3c3e44 75%);
+  background-size: 200% 100%;
+
+  animation: shimmer 1.4s infinite;
 }
 
 .episodes {
-  display: grid;
-  gap: 8px;
+  margin-top: 40px;
 }
 
-.episode {
-  height: 44px;
+.episodesTitle {
+  width: 140px;
+  height: 32px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+
+  background: linear-gradient(90deg, #3c3e44 25%, #4a4d55 50%, #3c3e44 75%);
+  background-size: 200% 100%;
+
+  animation: shimmer 1.4s infinite;
+}
+
+.episodeList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.episodeItem {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  min-height: 84px;
+  padding: 16px;
+  border-radius: 10px;
+
+  background: rgb(60, 62, 68);
+}
+
+.episodeCode,
+.episodeName,
+.episodeDate {
+  border-radius: 6px;
+
+  background: linear-gradient(90deg, #3c3e44 25%, #4a4d55 50%, #3c3e44 75%);
+  background-size: 200% 100%;
+
+  animation: shimmer 1.4s infinite;
+}
+
+.episodeCode {
+  width: 64px;
+  height: 12px;
+}
+
+.episodeName {
+  width: 70%;
+  height: 18px;
+}
+
+.episodeDate {
+  width: 120px;
+  height: 12px;
+  margin-top: auto;
 }
 
 @keyframes shimmer {
-  from {
+  0% {
     background-position: 200% 0;
   }
 
-  to {
+  100% {
     background-position: -200% 0;
   }
 }
@@ -104,11 +162,16 @@
     grid-template-columns: 1fr;
   }
 
+  .image {
+    height: clamp(220px, 65vw, 320px);
+  }
+
   .content {
     padding: 24px;
   }
 
-  .image {
-    min-height: 280px;
+  .row {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 }

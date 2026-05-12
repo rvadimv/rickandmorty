@@ -24,7 +24,7 @@ export const CharactersPage = () => {
 
   const { value, onSearch, onValueChange, onKeyDown } = useUrlSearchDraft('name')
 
-  const { data, isLoading, isFetching, error } = useGetCharactersQuery({
+  const { data, isLoading, error } = useGetCharactersQuery({
     page,
     name,
     status,
@@ -65,8 +65,12 @@ export const CharactersPage = () => {
   const isNotFound = isNotFoundError(error)
   const isCommonError = Boolean(error && !isNotFound)
 
-  const isCharactersRequestInProgress = isLoading || isFetching
-  const isPageLoading = isCharactersRequestInProgress || isEpisodesFetching
+  const isCharactersInitialLoading = isLoading && !data
+
+  const isEpisodesInitialLoading =
+    Boolean(firstEpisodeIds) && isEpisodesFetching && episodes.length === 0
+
+  const isPageLoading = isCharactersInitialLoading || isEpisodesInitialLoading
 
   const isEmpty = !isPageLoading && !error && characters.length === 0
   const canShowCharacters = !isPageLoading && !error && characters.length > 0
@@ -126,12 +130,15 @@ export const CharactersPage = () => {
                   ? episodeNamesById.get(firstEpisodeId)
                   : undefined
 
+                const isFirstEpisodeLoading =
+                  Boolean(firstEpisodeId) && isEpisodesFetching && !firstEpisodeName
+
                 return (
                   <CharacterCard
                     key={character.id}
                     character={character}
                     firstEpisodeName={firstEpisodeName}
-                    isEpisodeLoading={isEpisodesFetching}
+                    isEpisodeLoading={isFirstEpisodeLoading}
                   />
                 )
               })}
