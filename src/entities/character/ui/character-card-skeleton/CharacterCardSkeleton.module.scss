@@ -1,13 +1,14 @@
 .card {
+  height: 240px;
   display: flex;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 8px;
   background: rgb(60, 62, 68);
 }
 
 .image {
   width: 220px;
-  min-height: 220px;
+  aspect-ratio: 1 / 1;
   flex-shrink: 0;
   background: linear-gradient(90deg, #3c3e44 25%, #4a4d55 50%, #3c3e44 75%);
   background-size: 200% 100%;
@@ -16,7 +17,7 @@
 
 .content {
   width: 100%;
-  padding: 20px;
+  padding: 16px;
 }
 
 .title,
@@ -31,19 +32,22 @@
 .title {
   width: 70%;
   height: 18px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .lineShort {
   width: 40%;
-  height: 10px;
-  margin-bottom: 30px;
+  height: 16px;
+  margin-bottom: 20px;
+}
+.gapBlock {
+  height: 20px;
 }
 
 .block {
   width: 85%;
   height: 16px;
-  margin-bottom: 26px;
+  margin-bottom: 10px;
 }
 
 @keyframes shimmer {
@@ -63,6 +67,7 @@
 
   .image {
     width: 100%;
-    min-height: clamp(220px, 65vw, 320px);
+    aspect-ratio: 1 / 1;
+    min-height: auto;
   }
 }

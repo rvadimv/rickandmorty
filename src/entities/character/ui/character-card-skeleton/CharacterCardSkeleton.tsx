@@ -10,6 +10,9 @@ export const CharacterCardSkeleton = () => {
         <div className={s.lineShort} />
         <div className={s.block} />
         <div className={s.block} />
+        <div className={s.gapBlock} />
+        <div className={s.block} />
+        <div className={s.block} />
       </div>
     </article>
   )

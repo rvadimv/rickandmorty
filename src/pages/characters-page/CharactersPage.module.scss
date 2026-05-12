@@ -3,11 +3,11 @@
   top: 0;
   z-index: 10;
 
-  display: grid;
-  grid-template-columns: minmax(280px, 520px) auto;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 14px;
+  flex-wrap: wrap;
 
   padding: 12px 0;
   margin-bottom: 24px;
@@ -17,7 +17,8 @@
 
 .searchWrap {
   display: flex;
-  width: 100%;
+  width: 520px;
+  max-width: 100%;
 }
 
 .filters {
@@ -33,9 +34,8 @@
 }
 
 @media (max-width: 768px) {
-  .toolbar {
-    grid-template-columns: 1fr;
-    justify-content: stretch;
+  .searchWrap {
+    width: 100%;
   }
 
   .filters {

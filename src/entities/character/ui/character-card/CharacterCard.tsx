@@ -40,7 +40,7 @@ export const CharacterCard = ({
           <p className={s.meta}>
             <span className={s.label}>First seen in:</span>
             <span className={s.value}>
-              {isEpisodeLoading ? 'Loading episode...' : (firstEpisodeName ?? 'Unknown episode')}
+              {isEpisodeLoading ? '\u00A0' : (firstEpisodeName ?? 'Unknown episode')}
             </span>
           </p>
         </div>
